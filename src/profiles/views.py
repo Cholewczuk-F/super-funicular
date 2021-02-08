@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, reverse
 from django.http import Http404, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
@@ -43,12 +43,11 @@ def create_profile_follow(request, user_id):
     if request.user.is_authenticated:
         return HttpResponse("auth")
     else:
-        return HttpResponse("not auth")
-    # following = get_object_or_404(UserFollowing, user_id=request.POST.get('user_id'), following_user_id=request.POST.get('follower_id'))
+        return HttpResponseRedirect(reverse('profile-detail', kwargs={'id': user_id}))
     
     # if post.likes.filter(id=request.user.id).exists():
     #     post.likes.remove(request.user)
     # else:
     #     post.likes.add(request.user)
 
-    # return HttpResponseRedirect(reverse('profiles/<int:id>', args=(user.id)))
+    # return HttpResponseRedirect(reverse('profiles/<int:id>/', args=(user.id)))

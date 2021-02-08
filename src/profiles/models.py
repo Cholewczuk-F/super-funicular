@@ -6,6 +6,8 @@ class Profile(models.Model):
     followers = models.IntegerField(verbose_name="profile_followers", default=0)
     following = models.IntegerField(verbose_name="profile_following", default=0)
 
+    def get_absolute_url(self):
+        return reverse('profile-detail', kwargs={'id': self.id})
 
 class UserFollowing(models.Model):
     user_id = models.ForeignKey(Profile, verbose_name="user_id", related_name="followed_id", on_delete=models.DO_NOTHING)
