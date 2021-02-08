@@ -15,11 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from profiles.views import (
-    register, 
-    login, 
-    testing,
-    profile_detail_view)
+from profiles.views import register, login, testing, profile_detail_view
 from django.contrib.auth import views as auth_views
 
 
