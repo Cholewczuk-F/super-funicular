@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, HttpResponse
 from .forms import UserForm, ProfileForm
+
+from django.contrib.auth import authenticate, login
+
 def register(request):
     if request.method == "POST":
         u_form = UserForm(request.POST)
@@ -14,6 +17,12 @@ def register(request):
     else:
         u_form = UserForm(request.POST or None)
         p_form = ProfileForm(request.POST or None)
-    return render(request, 'create_profile.html', {'u_form': u_form, 'p_form': p_form})
+        return render(request, 'create_profile.html', {'u_form': u_form, 'p_form': p_form})
 
+        
+def testing(request):
+    return render(request, 'base.html')
+
+def profile_detail_view(request, id):
+    
 # Create your views here.
