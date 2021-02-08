@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, HttpResponse
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 
-from .models import Profile
+from .models import Profile, UserFollowing
 from .forms import UserForm, ProfileForm
 
 def register(request):
@@ -39,3 +39,16 @@ def profile_detail_view(request, id):
 
     return HttpResponse("fuck")
 
+def create_profile_follow(request, user_id):
+    if request.user.is_authenticated:
+        return HttpResponse("auth")
+    else:
+        return HttpResponse("not auth")
+    # following = get_object_or_404(UserFollowing, user_id=request.POST.get('user_id'), following_user_id=request.POST.get('follower_id'))
+    
+    # if post.likes.filter(id=request.user.id).exists():
+    #     post.likes.remove(request.user)
+    # else:
+    #     post.likes.add(request.user)
+
+    # return HttpResponseRedirect(reverse('profiles/<int:id>', args=(user.id)))

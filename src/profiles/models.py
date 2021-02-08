@@ -3,10 +3,11 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    followers = models.IntegerField(verbose_name="user followers", default=0)
+    followers = models.IntegerField(verbose_name="profile_followers", default=0)
+    following = models.IntegerField(verbose_name="profile_following", default=0)
 
-class Following(models.Model):
-    class Meta:
-        unique_together = (('follower', 'victim'),)
-    follower = models.OneToOneField(User, on_delete=models.DO_NOTHING, related_name="follower")
-    victim = models.OneToOneField(User, on_delete=models.DO_NOTHING, related_name="victim")
+
+class UserFollowing(models.Model):
+    user_id = models.ForeignKey(Profile, verbose_name="user_id", related_name="followed_id", on_delete=models.DO_NOTHING)
+    following_user_id = models.ForeignKey(Profile, verbose_name="follower_id", related_name="follower_id", on_delete=models.DO_NOTHING)
+    created = models.DateTimeField(auto_now_add=True, db_index=True)

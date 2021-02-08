@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from profiles.views import register, login, testing, profile_detail_view
+from profiles.views import (
+    register, 
+    login, 
+    testing, 
+    profile_detail_view,
+    create_profile_follow)
 from django.contrib.auth import views as auth_views
 
 
@@ -25,4 +30,5 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('', testing),
     path('profiles/<int:id>/', profile_detail_view),
+    path('profiles/follow/<int:user_id>/', create_profile_follow)
 ]
