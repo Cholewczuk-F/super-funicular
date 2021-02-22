@@ -18,17 +18,28 @@ from django.urls import path, include
 from profiles.views import (
     register, 
     login, 
-    testing, 
+    main_page_view, 
     profile_detail_view,
-    create_profile_follow)
+    post_detail_view,
+    post_create_view)
 from django.contrib.auth import views as auth_views
 
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', register),
     path('', include('django.contrib.auth.urls')),
-    path('', testing),
+    path('', main_page_view),
+
+    # profiles
     path('profiles/<int:id>/', profile_detail_view, name='profile-detail'),
-    path('profiles/follow/<int:user_id>/', create_profile_follow)
+
+    # posts
+    path('posts/create/', post_create_view, name = 'post-create'),
+    path('posts/<int:id>/', post_detail_view, name = "post-detail"),
 ]
+# for img upload
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

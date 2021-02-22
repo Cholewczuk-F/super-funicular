@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1> {{ post.author.user.username }} </h1>
+    <p class = "p_timestamp"> {{ post.created }} </p>
+    <img src="{{post.img.url}}" alt = "none or error" style = "width: 400px; height: 400px;"></img>
+
+    <!-- LIKES -->
+    <p class = "p_likes">Post was liked:  {{ post.likes }} times.</p>
+    <form method = "POST" name = "likeForm"> {% csrf_token %}
+        {% if post_liked == True %}
+            <input type = "submit" value = "Unlike" name = "Unlike">
+        {% else %}
+            <input type = "submit" value = "Like" name = "Like">
+        {% endif %}
+    </form>
+
+    <p class = "p_description"> {{ post.description }}</p>
+
+    <!-- COMMENTS -->
+    <ul>
+    {% for comment, count, user_like in comments_zipped %}
+
+        <li>
+            <b style = "color: red;">[{{ count }}]</b>{{ comment.description }} ~
+            <a href="/profiles/{{comment.author.pk}}">{{ comment.author.user.username }}</a>
+            <form method="post" name="likeCommentForm">
+                {% csrf_token %}
+                <input type = "hidden" name = "commentID" value = "{{ comment.pk }}">
+                {% if user_like == True %}
+                <input type = "submit" value = "Unlike">
+                {% else %}
+                <input type = "submit" value = "Like">
+                {% endif %}
+            </form>
+        </li><br>
+    {% endfor %}
+    </ul>
+
+    <!-- NEW COMMENT -->
+    </br></br>
+    <form method="post" name = "commentForm"> {% csrf_token %}
+        {{ comment_form.as_p }}
+        <input type = "submit" value = "Comment" name = "Comment">
+    </form>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<h1 class = "welcome_msg">Hello {{ profile.user.username }}</h1>
+
+{% for post in postsToView %}
+<div class = "user_post" style = "margin-left: 300px; margin-top: 50px; border-color: black; border-style: solid; border-width: 1px; width: 400px">
+    <p> {{ post.author.user.username }} </p>
+    <p> {{ post.created }} </p>
+    <a href="{{ post.get_absolute_url }}"><img src="{{ post.img.url }}"></a>
+    <p> {{ post.likes }} </p>
+</div>
+{% endfor %}
+{% endblock %}
